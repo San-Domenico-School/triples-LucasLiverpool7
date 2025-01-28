@@ -9,30 +9,37 @@ public class Scorekeeper
 {
 
     // Private static fields
-    private static int deckSize;       // Stores the size of the deck
-    private static int score = 0;      // Stores the current score, initialized to 0
-    private static long startTime = System.currentTimeMillis();  // Stores the start time in milliseconds
+    private static int deckSize;       
+    private static int score = 0;     
+    private static long startTime = System.currentTimeMillis();  
     
-    // Flag to track if it's the first update
+    
     private static boolean firstUpdate = true;
 
-    // Public static setter method for deckSize
+    
     public static void setDeckSize(int size) 
     {
-        deckSize = size;  // Assigns the input parameter 'size' to deckSize
+        deckSize = size;  
     }
 
-    // Public static void method to update the score
+    
     public static void updateScore() 
     {
         if (firstUpdate) 
         {
-            // Set score to 27 on the first update
+            
             score = 27;
-            firstUpdate = false;  // After the first update, set the flag to false
-        }
-        // Subsequent updates do not change the score
+            firstUpdate = false;
+    } else {
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        score += Math.max(10, 1000 - elapsedTime / 100);
+        startTime = System.currentTimeMillis(); 
+
     }
+    
+    }
+        
+    
 
     // Public static getter method for score
     public static int getScore() 
