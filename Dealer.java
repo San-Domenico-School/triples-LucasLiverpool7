@@ -16,8 +16,9 @@ public class Dealer extends Actor
     private ArrayList <Card> cardsOnBoard;
     private ArrayList <Integer> selectedCardsIndex;
     private Card []cardSelected;
-    
-   
+    public boolean shapeType;
+    public boolean numberOfShapesType;
+    public boolean shadingType;
     
     public Dealer(int numCardsInDeck)
     {
@@ -74,6 +75,60 @@ public class Dealer extends Actor
     {
         
     }
+    public void checkColor (Card []cardSelected)
+    {
+        if(cardSelected [0].getShape() == cardSelected [1] .getShape()
+        && cardSelected [1].getShape() == cardSelected [2]. getShape())
+        {
+            shapeType = true;
+        }
+        else if (cardSelected [0].getShape() != cardSelected [1] .getShape()
+        && cardSelected [1].getShape() != cardSelected [2]. getShape())
+        {
+            shapeType = true;
+        }
+        else
+        {
+            shapeType = false;
+        }
+    }
+    public void checkShape(Card[] cardSelected) {
+    if (cardSelected[0].getShape() == cardSelected[1].getShape() 
+        && cardSelected[1].getShape() == cardSelected[2].getShape()) {
+        shapeType = true;
+    } else if (cardSelected[0].getShape() != cardSelected[1].getShape() 
+               && cardSelected[1].getShape() != cardSelected[2].getShape()) {
+        shapeType = true;
+    } else {
+        shapeType = false;
+    }
+    }
+
+    public void checkShading(Card[] cardSelected) {
+    if (cardSelected[0].getShading() == cardSelected[1].getShading() 
+        && cardSelected[1].getShading() == cardSelected[2].getShading()) {
+        shadingType = true;
+    } else if (cardSelected[0].getShading() != cardSelected[1].getShading() 
+               && cardSelected[1].getShading() != cardSelected[2].getShading()) {
+        shadingType = true;
+    } else {
+        shadingType = false;
+    }
+    }
+
+    public void checkNumberOfShapes(Card[] cardSelected) {
+    if (cardSelected[0].getNumberOfShapes() == cardSelected[1].getNumberOfShapes() 
+        && cardSelected[1].getNumberOfShapes() == cardSelected[2].getNumberOfShapes()) {
+        numberOfShapesType = true;
+    } else if (cardSelected[0].getNumberOfShapes() != cardSelected[1].getNumberOfShapes() 
+               && cardSelected[1].getNumberOfShapes() != cardSelected[2].getNumberOfShapes()) {
+        numberOfShapesType = true;
+    } else {
+        numberOfShapesType = false;
+    }
+    }
+
+    
     public void setCardsSelected(ArrayList <Card> cardList, ArrayList <Integer> numCardsSelected, Card[] selectedCards)
     {
         
