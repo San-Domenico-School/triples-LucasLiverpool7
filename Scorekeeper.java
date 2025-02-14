@@ -1,49 +1,36 @@
+
+
 /**
- * This is the Scorekeeper class. It keeps track of the game score and deck size.
- * 
- * @lucas
- * 11:19 
- * 1/10/25
+ * Author: Lucas
+ * Date: 1/13/2025
  */
-public class Scorekeeper 
+public class Scorekeeper
 {
+    private static int deckSize;
+    private static int score;
+    private static long startTime = System.currentTimeMillis();
 
-    // Private static fields
-    private static int deckSize;       
-    private static int score = 0;     
-    private static long startTime = System.currentTimeMillis();  
-    
-    
-    private static boolean firstUpdate = true;
-
-    
-    public static void setDeckSize(int size) 
+   
+    public static void setDeckSize(int newSize)
     {
-        deckSize = size;  
+        deckSize = newSize;
     }
 
-    
-    public static void updateScore() 
+   
+     public static void updateScore()
     {
-        if (firstUpdate) 
+        int timePassed = (int)((System.currentTimeMillis() - startTime) / 1000);
+        int points = deckSize - timePassed;  
+        if(points > 0)
         {
-            
-            score = 27;
-            firstUpdate = false;
-    } else {
-        long elapsedTime = System.currentTimeMillis() - startTime;
-        score += Math.max(10, 1000 - elapsedTime / 100);
-        startTime = System.currentTimeMillis(); 
-
+            score += points;
+        }
+        startTime = System.currentTimeMillis();
     }
-    
-    }
-        
-    
 
-    // Public static getter method for score
-    public static int getScore() 
+
+    public static int getScore()
     {
-        return score;  // Returns the current score
+        return score;
     }
 }

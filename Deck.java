@@ -46,11 +46,18 @@ public class Deck
         return shuffledDeck;
         //returns the entire shuffled deck
     }
-    protected int limitNumCardsInDeck(int limit)
+    protected int limitNumCardsInDeck(int numOfCardsInDeck)
     {
-       
-        return (limit <= 27)? 27 : 81;
+       if (numOfCardsInDeck <= 27)
+       {
+           return 27;
         
+       }
+       else 
+       {
+           return 81;
+       }
+         
 
     }
    

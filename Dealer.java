@@ -1,41 +1,33 @@
-import greenfoot.*;
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 
 /**
  * Write a description of class Dealer here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ *
+ * @author (Lucas Willcuts)
+ * @version (2/13/2025)
  */
 public class Dealer extends Actor
 {
-    // instance variables - replace the example below with your own
+    /**
+     * Act - do whatever the Dealer wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
     private Deck deck;
-    private int numCardsInDeck;
-    private int triplesRemaining;
     private ArrayList <Card> cardsOnBoard;
     private ArrayList <Integer> selectedCardsIndex;
-    private Card []cardSelected;
+    private Card []cardsSelected;
+    private int numCardsInDeck;
+    private int triplesRemaining;
     public boolean shapeType;
+    public boolean colorType;
     public boolean numberOfShapesType;
     public boolean shadingType;
-    
-    public Dealer(int numCardsInDeck)
-    {
-        this.numCardsInDeck = numCardsInDeck;
-        triplesRemaining = numCardsInDeck / 3;
-        deck = new Deck (numCardsInDeck);
-    }
-    private boolean isaTriple(Card card1, Card card2, Card card3)
-    {
-        return true;
-    }
+   
     public void addedToWorld(World world)
     {
         dealBoard();
         setUI();
-        deck.getTopCard();
-        
     }
     public void dealBoard()
     {
@@ -55,35 +47,45 @@ public class Dealer extends Actor
         getWorld().addObject(deck.getTopCard(), 360, 190);
         getWorld().addObject(deck.getTopCard(), 360, 260);
         getWorld().addObject(deck.getTopCard(), 360, 330);
+       
+       
+       
     }
     public void setUI()
     {
-        Integer cardsRemaining = new Integer (numCardsInDeck - 15);
-        Integer score = new Integer (0);
-        getWorld().getBackground().drawString(cardsRemaining.toString(), 305, 475);
-        getWorld().getBackground().drawString(score.toString(), 308, 510);
+        Integer cardsRemaining = new Integer (deck.getNumCardsInDeck());
+        Integer score = Scorekeeper.getScore();
+        getWorld().showText("" + score, 308, 510);
+        getWorld().showText("" + cardsRemaining, 305, 475);
     }
     public void endGame()
     {
-
+       
     }
-    public void checkIfTriple()
+    public void checkIfTriple(Card []cardsSelected)
     {
-        
+        this.cardsSelected = cardsSelected;
+        checkShape(cardsSelected);
+        checkColor(cardsSelected);
+        checkNumberOfShapes(cardsSelected);
+        checkShading(cardsSelected);
+             if (shapeType || colorType || numberOfShapesType || shadingType)
+        {
+            actionIfTriple();
+        }
+         
+       
     }
-    public void actionIfTriple()
+   
+    public void checkShape(Card []cardsSelected)
     {
-        
-    }
-    public void checkColor (Card []cardSelected)
-    {
-        if(cardSelected [0].getShape() == cardSelected [1] .getShape()
-        && cardSelected [1].getShape() == cardSelected [2]. getShape())
+        if(cardsSelected [0].getShape() == cardsSelected [1].getShape()
+        && cardsSelected [1].getShape() == cardsSelected [2].getShape())
         {
             shapeType = true;
         }
-        else if (cardSelected [0].getShape() != cardSelected [1] .getShape()
-        && cardSelected [1].getShape() != cardSelected [2]. getShape())
+        else if(cardsSelected [0].getShape() != cardsSelected [1].getShape()
+        && cardsSelected [1].getShape() != cardsSelected [2].getShape())
         {
             shapeType = true;
         }
@@ -91,47 +93,112 @@ public class Dealer extends Actor
         {
             shapeType = false;
         }
+       
     }
-    public void checkShape(Card[] cardSelected) {
-    if (cardSelected[0].getShape() == cardSelected[1].getShape() 
-        && cardSelected[1].getShape() == cardSelected[2].getShape()) {
-        shapeType = true;
-    } else if (cardSelected[0].getShape() != cardSelected[1].getShape() 
-               && cardSelected[1].getShape() != cardSelected[2].getShape()) {
-        shapeType = true;
-    } else {
-        shapeType = false;
-    }
-    }
-
-    public void checkShading(Card[] cardSelected) {
-    if (cardSelected[0].getShading() == cardSelected[1].getShading() 
-        && cardSelected[1].getShading() == cardSelected[2].getShading()) {
-        shadingType = true;
-    } else if (cardSelected[0].getShading() != cardSelected[1].getShading() 
-               && cardSelected[1].getShading() != cardSelected[2].getShading()) {
-        shadingType = true;
-    } else {
-        shadingType = false;
-    }
-    }
-
-    public void checkNumberOfShapes(Card[] cardSelected) {
-    if (cardSelected[0].getNumberOfShapes() == cardSelected[1].getNumberOfShapes() 
-        && cardSelected[1].getNumberOfShapes() == cardSelected[2].getNumberOfShapes()) {
-        numberOfShapesType = true;
-    } else if (cardSelected[0].getNumberOfShapes() != cardSelected[1].getNumberOfShapes() 
-               && cardSelected[1].getNumberOfShapes() != cardSelected[2].getNumberOfShapes()) {
-        numberOfShapesType = true;
-    } else {
-        numberOfShapesType = false;
-    }
-    }
-
-    
-    public void setCardsSelected(ArrayList <Card> cardList, ArrayList <Integer> numCardsSelected, Card[] selectedCards)
+        public void checkColor(Card[] cardsSelected)
     {
-        
+        if (cardsSelected[0].getColor() == cardsSelected[1].getColor()
+            && cardsSelected[1].getColor() == cardsSelected[2].getColor())
+        {
+            colorType = true;
+        }
+        else if (cardsSelected[0].getColor() != cardsSelected[1].getColor()
+                 && cardsSelected[1].getColor() != cardsSelected[2].getColor())
+        {
+            colorType = true;
+        }
+        else
+        {
+            colorType = false;
+        }
     }
-}
+   
+    public void checkNumberOfShapes(Card[] cardsSelected)
+    {
+        if (cardsSelected[0].getNumberOfShapes() == cardsSelected[1].getNumberOfShapes()
+            && cardsSelected[1].getNumberOfShapes() == cardsSelected[2].getNumberOfShapes())
+        {
+            numberOfShapesType = true;
+        }
+        else if (cardsSelected[0].getNumberOfShapes() != cardsSelected[1].getNumberOfShapes()
+                 && cardsSelected[1].getNumberOfShapes() != cardsSelected[2].getNumberOfShapes())
+        {
+            numberOfShapesType = true;
+        }
+        else
+        {
+            numberOfShapesType = false;
+        }
+    }
+   
+    public void checkShading(Card[] cardsSelected)
+    {
+        if (cardsSelected[0].getShading() == cardsSelected[1].getShading()
+            && cardsSelected[1].getShading() == cardsSelected[2].getShading())
+        {
+            shadingType = true;
+        }
+        else if (cardsSelected[0].getShading() != cardsSelected[1].getShading()
+                 && cardsSelected[1].getShading() != cardsSelected[2].getShading())
+        {
+            shadingType = true;
+        }
+        else
+        {
+            shadingType = false;
+        }
+    }
+   
+    public void actionIfTriple()
+    {
     
+        int[][] cardLocations = new int[5][3]; 
+        for (int i = 0; i < cardsSelected.length; i++)
+        {
+            cardLocations[i][0] = cardsSelected[i].getX(); // X-coordinate
+            cardLocations[i][1] = cardsSelected[i].getY(); // Y-coordinate
+        }
+   
+       
+   
+        // Remove the cards from the board
+        for (int i = 0; i < cardsSelected.length; i++)  
+        {
+            int x = cardLocations[i][0];
+            int y = cardLocations[i][1];
+        }
+   
+    
+        for (int i = 0; i < cardsSelected.length; i++)
+        {
+            int x = cardLocations[i][0];
+            int y = cardLocations[i][1];
+            Card card = deck.getTopCard();
+            getWorld().addObject(card, x, y);
+        }
+   
+        // Decrement triplesRemaining
+        triplesRemaining--;
+   
+        // Update the score
+        Scorekeeper.updateScore();
+   
+        cardsOnBoard = new ArrayList<>(getWorld().getObjects(Card.class));
+        
+        setUI(); 
+   
+        
+        }
+   
+    public void setCardsSelected(ArrayList <Card> cardList, ArrayList <Integer> numCardsSelected, Card[] selectedCards )
+    {
+       
+    }
+    public Dealer(int numCardsInDeck)
+    {
+        this.numCardsInDeck = numCardsInDeck;
+        triplesRemaining = numCardsInDeck / 3;
+        deck = new Deck (numCardsInDeck);
+    }
+   
+}

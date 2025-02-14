@@ -25,6 +25,9 @@ public class GameBoard extends World
         
         // Add the player to the world at position (-30, -30) (out of view)
         addObject(player, -30, -30);
+        Scorekeeper scorekeeper = new Scorekeeper();
+        addObject(dealer, 200, 300);
+
     }
 
 
